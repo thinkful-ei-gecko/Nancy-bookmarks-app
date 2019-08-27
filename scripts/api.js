@@ -20,7 +20,7 @@ const api = (function (){
   };
 
   const deleteBookmark = function (id){
-    return fetch(`${BASE_URL}/bookmarks`, {
+    return fetch(`${BASE_URL}/bookmarks/${id}`, {
       method: 'DELETE'
     });
   };
