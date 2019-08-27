@@ -38,8 +38,8 @@ const bookmarksList = (function (){
     let ratingElement = `<span class="bookmarkRating">Rating: ${bookmark.rating}</span>`;
 
     return `
-    <ul class="bookmark-element" data-item-id="${bookmark.id}">
-        <li>
+    <ul>
+        <li class="bookmark-element" data-item-id="${bookmark.id}">
             ${titleElement} ${ratingElement}
             <div id="elementExpand" class="expandable">
                 <ul>Description: ${bookmark.desc}</ul>
@@ -119,13 +119,15 @@ const bookmarksList = (function (){
   }
 
   function handlerDelete() {
-    $('.bookmark-list').on('click', '.delete', function(){
+    $('.bookmark-list').on('click', '.delete', function(event){
       console.log('delete button clicked');
       const id = getIdFromElement(event.currentTarget);
       console.log(id); //undefined
 
     });
   }
+
+
   /*
   function handlerExpand(){
     $('.bookmark-list').on('click', '.expand', function () {
