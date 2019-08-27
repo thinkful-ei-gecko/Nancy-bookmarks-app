@@ -5,27 +5,27 @@ const bookmarksList = (function (){
 
 
 
-  function generateAddElements (bookmark){
+  function generateAddElements (){
     return `
-        <form class="add-form">
+        <form id="add-form">
             <div>
                 <label for="title">Title</label>
-                <input type="text" id="title" name="title" value="${bookmark.title}" placeholder="Enter Title">
+                <input type="text" id="title" name="title" placeholder="Enter Title">
             </div>
             <div>
                 <label for="rating">Rating</label>
-                <input type="text" id="rating" name="rating" value="${bookmark.rating}" placeholder="Rate it out of 5">
+                <input type="number" id="rating" name="rating" max="5" placeholder="Rate it out of 5">
             </div>
             <div>
-                <label for="description">Description</label>
-                <input type="text" id="description" name="description" value="${bookmark.description}" placeholder="Enter a description">
+                <label for="desc">Description</label>
+                <input type="text" id="desc" name="desc" placeholder="Enter a description">
             </div>
             <div>
                 <label for="url">URL</label>
                 <input type="text" name="url" id="url" placeholder="https://www.ncbi.nlm.nih.gov/">
             </div>
-            <div>
-                <input type="submit" name="submit" id="submit" value="Submit Form">
+            <div class="add-submit-button">
+                <input type="submit" name="submit" id="submit" value="Create Bookmark">
             </div>
         </form>`;
   }
@@ -38,11 +38,11 @@ const bookmarksList = (function (){
     let ratingElement = `<span class="bookmarkRating">Rating: ${bookmark.rating}</span>`;
 
     return `
-    <ul>
-        <li class="bookmark-element" data-item-id="${bookmark.id}">
+    <ul class="bookmark-element" data-item-id="${bookmark.id}">
+        <li>
             ${titleElement} ${ratingElement}
-            <div class="expandable">
-                <ul>Description: ${bookmark.description}</ul>
+            <div id="elementExpand" class="expandable">
+                <ul>Description: ${bookmark.desc}</ul>
                 <ul>Visit: ${bookmark.url}</ul>
             </div>
         </li>
@@ -78,7 +78,6 @@ const bookmarksList = (function (){
   function handlerAddBookmark(){
     console.log('addBookmarkHandler fired');
     $('.add-button').on('click', function() {
-      $('.add-button').remove();
       store.adding = true; 
       render();
 
@@ -86,11 +85,62 @@ const bookmarksList = (function (){
   }
 
   //actually adding the information to the api/store
+  function handleNewBookmarkSubmit(){
+    function serializeJson(form) {
+    //new formData is an object containing 
+    //keys - which are the 'name' att
+    //values - the input values 
+      const formData = new FormData(form); 
+      const o = {};
+      formData.forEach((val, name) => o[name] = val);
+      return JSON.stringify(o);
+    }
 
+    console.log('adding event listener');
+    $('.add-form-container').on('submit', '#add-form', function (event) {
+      event.preventDefault();
+      let formElement = $('#add-form')[0];
+      console.log(serializeJson(formElement)); //{"firstname":"Chitchanok","lastname":"Phiukhao","email":"cphiukhao@yahoo.com"}
 
+      let data = serializeJson(formElement);
+      api.createBookmark(data)
+        .then(res => res.json()) //converting back to js 
+        .then((data) => {
+          store.addBookmark(data);
+          render();
+        });
+    });
+  }
+
+  function getIdFromElement(bookmark){
+    return $(bookmark)
+      .closest('.bookmark-element')
+      .data('item-id');
+  }
+
+  function handlerDelete() {
+    $('.bookmark-list').on('click', '.delete', function(){
+      console.log('delete button clicked');
+      const id = getIdFromElement(event.currentTarget);
+      console.log(id); //undefined
+
+    });
+  }
+  /*
+  function handlerExpand(){
+    $('.bookmark-list').on('click', '.expand', function () {
+      console.log('expand button working');
+      $('#elementExpand').toggle();
+      render();
+    });
+  }
+*/
 
   function bindEventListeners() {
     handlerAddBookmark();
+    handleNewBookmarkSubmit();
+    handlerDelete();
+    //handlerExpand();
   }
  
 

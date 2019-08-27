@@ -4,9 +4,16 @@
 
 $(document).ready(function() {
   console.log('page ran');
-  console.log(store);
   bookmarksList.bindEventListeners();
-  bookmarksList.render();
+  api.getBookmarks()
+    .then(res => res.json())
+    .then((bookmarks) => {
+      bookmarks.forEach((bookmark) => store.addBookmark(bookmark));
+      bookmarksList.render();
+
+    })
+    .catch(err => console.log(err.message));
+
 
   /*api.getBookmark()
     .then((bookmarks) => {

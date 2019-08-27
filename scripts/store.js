@@ -23,16 +23,7 @@ let store = (function (){
 
   return {
 
-    bookmarks: [
-      {
-        id: 1,
-        title: 'Genetics Article',
-        description: 'NGS at work description',
-        url: 'http://www.bio.com',
-        rating: 4,
-        expanded: false,
-      }
-    ],
+    bookmarks: [],
     adding: false,
     showError: '',
     filterBy: '',

@@ -1,21 +1,21 @@
 'use strict';
-/* global $ */
+/* global  */
 
 const api = (function (){
 
   const BASE_URL = 'https://thinkful-list-api.herokuapp.com/nancy';
 
-  const getBookmark = function (){
-    fetch(`${BASE_URL}/bookmarks`);
+  const getBookmarks = function (){
+    return fetch(`${BASE_URL}/bookmarks`);
   };
 
-  const createBookmarkTitle = function (title){
+  const createBookmark = function (data){
     return fetch(`${BASE_URL}/bookmarks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({title})
+      body: data
     });
   };
 
@@ -29,8 +29,8 @@ const api = (function (){
 
   }*/
   return {
-    getBookmark,
-    createBookmarkTitle,
+    getBookmarks,
+    createBookmark,
     deleteBookmark
   };
 }());
