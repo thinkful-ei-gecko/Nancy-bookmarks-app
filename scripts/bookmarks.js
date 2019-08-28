@@ -3,30 +3,47 @@
 
 const bookmarksList = (function (){
 
+  function generateError(message) {
+    return `
+      <section class="error-content">
+        <button id="cancel-error">Close Error Message</button>
+        <p>Uh oh! Something went wrong. <span class="error-message">Server says: ${message}</span></p>
+      </section>
+    `;
+  }
+
+  function renderError() {
+    if (store.error) {
+      const el = generateError(store.error);
+      $('.error-container').html(el);
+    } else {
+      $('.error-container').empty();
+    }
+  }
+
   function generateAddElements (){
     return `
         <form id="add-form">
-            <div>
+            <div class="title">
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" placeholder="Enter Title" required>
             </div>
-            <div>
+            <div class="rating">
                 <label for="rating">Rating</label>
                 <input type="number" id="rating" name="rating" max="5" placeholder="Rate it out of 5">
             </div>
-            <div>
+            <div class="description">
                 <label for="desc">Description</label>
                 <input type="text" id="desc" name="desc" placeholder="Enter a description">
             </div>
-            <div>
+            <div class="url">
                 <label for="url">URL</label>
                 <input type="text" name="url" id="url" placeholder="https://www.ncbi.nlm.nih.gov/" required>
             </div>
             <div class="submit-cancel-button-container">
                 <input type="submit" name="submit" id="submit" value="Create Bookmark">
-                <button class="cancel-button">Cancel</button>
             </div>
-            
+            <div>
         </form>`;
   }
 
@@ -41,7 +58,7 @@ const bookmarksList = (function (){
     <ul class="bookmark-element" data-item-id="${bookmark.id}">
         <li>
             ${titleElement} ${ratingElement}
-            <div id="elementExpand" class="expandable">
+            <div id="elementExpand" class="hide">
                 <ul>Description: ${bookmark.desc}</ul>
                 <ul>Visit: ${bookmark.url}</ul>
             </div>
@@ -59,13 +76,10 @@ const bookmarksList = (function (){
   }
 
   function render() {
+    renderError();
+
     let bookmarks = [...store.bookmarks];
-
-    if(store.adding){
-      $('.add-form-container').html(generateAddElements);
-    }
-
-    if(store.filterBy !== 'ALL'){
+    if(store.filterBy !== 'Filter By Rating'){
 
 
 /////////////////////// explain logic please       
@@ -108,25 +122,19 @@ const bookmarksList = (function (){
 
       let data = serializeJson(formElement);
       api.createBookmark(data)
-        .then(res => res.json()) //converting back to js 
         .then((data) => {
           store.addBookmark(data);
           formElement.classList.add('hide');
           render();
+        })
+        .catch((err) => {
+          store.setError(err.message);
+          renderError();
         });
     });
   }
 
-  /////// cancel button if time permits 
- /*
-  function handlerCancelForm() {
-    $('.add-form-container').on('click', '.cancel-button', function(){
-      console.log('cancel button clicked');
-      $('.add-form-container').hide();
-      render();
-    })
-  }
-*/
+
   function getIdFromElement(bookmark){
     return $(bookmark)
       .closest('.bookmark-element')
@@ -160,23 +168,34 @@ const bookmarksList = (function (){
   
   }
 
-  /*
+
   function handlerExpand(){
     $('.bookmark-list').on('click', '.expand', function () {
       console.log('expand button working');
-      $('#elementExpand').toggle();
-      render();
+      const closestBookmarkLi = $(this).parent().find('li')[0];
+
+      const expandElement = closestBookmarkLi.children[2];
+     
+      expandElement.classList.toggle('hide');
+     
     });
   }
-*/
+
+  function handleCloseError() {
+    $('.error-container').on('click', '#cancel-error', () => {
+      store.setError(null);
+      renderError();
+    });
+  }
+
 
   function bindEventListeners() {
     handlerAddBookmark();
     handleNewBookmarkSubmit();
     handlerDelete();
     handlerFilterByRank();
-    //handlerCancelForm();
-    //handlerExpand();
+    handlerExpand();
+    handleCloseError();
   }
  
 

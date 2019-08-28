@@ -4,32 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Hepta+Slab|Lexend+Zetta|Red+Hat+Text&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
-    <title>Bookmarks App</title>
+    <title>My Bookmarks App</title>
 </head>
 <body>
-    <h1>My Bookmarks</h1>
-    <div class="button-select">
-        <button class="add-button">Add Bookmark</button>
-        <select class="select-button">
-            <option>ALL</option>
-            <option value="5">Minimum Rating: 5</option>
-            <option value="4">Minimum Rating: 4</option>
-            <option value="3">Minimum Rating: 3</option>
-            <option value="2">Minimum Rating: 2</option>
-            <option value="1">Minimum Rating: 1</option>
-        </select>
-    </div>
-    <section class="add-form-container">
+    <header>
+        <h1>My Bookmarks</h1>    
+    </header>
+    <main>
+        <div class="button-select">
+            <button class="add-button">Add Bookmark</button>
+                <select class="select-button">
+                    <option>Filter By Rating</option>
+                    <option value="5">Minimum Rating: 5</option>
+                    <option value="4">Minimum Rating: 4</option>
+                    <option value="3">Minimum Rating: 3</option>
+                    <option value="2">Minimum Rating: 2</option>
+                    <option value="1">Minimum Rating: 1</option>
+                </select>
+        </div>
+        <section class="add-form-container">
 
-    </section>
-    <div class="error-container">
-        
-    </div>
+        </section>
+        <div class="error-container">
 
-    <section class="bookmark-list">
+        </div>
+        <section class="bookmark-list">
+            
+        </section>
+    </main>
 
-    </section>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cuid/1.3.8/browser-cuid.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="scripts/store.js"></script>

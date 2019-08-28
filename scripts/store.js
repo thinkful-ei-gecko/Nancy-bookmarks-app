@@ -2,6 +2,9 @@
 
 let store = (function (){
 
+  const setError = function(error) {
+    this.error = error;
+  };
 
   const addBookmark = function(bookmark){
     this.bookmarks.push(bookmark);
@@ -19,29 +22,18 @@ let store = (function (){
   const setFilterBy = function (rank) {
     this.filterBy = rank;
   }
-  /*function findAndUpdate(id, newData) {
-    let foundBookmark = store.bookmarks.find(bookmark => bookmark.id === id);
-    Object.assign(foundBookmark, newData);
-  }*/
-
-  /*
-  const error = function(errorMessage){
-      this.showError = //error message
-  }
-  */
 
   return {
 
     bookmarks: [],
-    adding: false,
-    showError: '',
-    filterBy: 'ALL',
+    error: null,
+    filterBy: 'Filter By Rating',
 
+    setError,
     addBookmark,
     findById,
     findAndDelete,
     setFilterBy
-    // findAndUpdate
   };
  
 

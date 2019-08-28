@@ -1,12 +1,182 @@
-.expandable{
-    display: none;
+
+* {
+    box-sizing: border-box;
+  }
+
+main{
+   
+    border: 1px black;
+    margin: 0 auto;
+    font-family:  'Red Hat Text', sans-serif;
+
 }
 
 .hide{
     display: none;
+   
+}
+#elementExpand{
+    font-size: 15px;
+    margin-left: 0;
+    border: 0;
+    padding: 10px;
+    
 }
 
 h1 {
     text-align: center;
-    font-family: sans-serif;
+    font-family: 'Hepta Slab', serif;
+    font-size: 50px;
 }
+
+.button-select {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: 'Red Hat Text', sans-serif;
+}
+.add-button {
+    background-color: grey; 
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+  }
+
+
+.select-button {
+        background-color: grey; 
+        border: none;
+        color: white;
+        padding: 10px 32px;
+        font-size: 16px;
+       
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        -ms-appearance: none;
+        border-radius: 0px;
+
+      }
+
+
+.bookmark-element{
+    border: 1px solid white;
+}
+.bookmark-list{
+    margin-top: 30px;
+}
+ul {
+    list-style-type: none;
+    background-color: rgb(227, 227, 227);
+    padding: 0;
+    margin: 0;
+   /* border: 2px solid white; */
+    
+  
+}
+li {
+    
+    font-family:  'Red Hat Text', sans-serif;
+    font-size: 20px;
+    padding: 10px;
+
+}
+
+.bookmarkTitle{
+    margin-top: 10px;
+}
+
+.bookmarkRating{
+    float: right;
+    margin-right: 20px;
+}
+.expand, .delete {
+    background-color: grey; 
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-family:  'Red Hat Text', sans-serif;
+    font-size: 13px;
+    margin-bottom: 7px;
+    margin-left: 10px;
+  }
+
+ .add-form-container{
+     padding: 30px;
+     text-align: center;
+ }
+
+ input, label {
+     display: block;
+
+ }
+
+ 
+ .rating, .title, .description, .url{
+    font-family:  'Red Hat Text', sans-serif;
+ }
+
+#title, #url, #desc, #rating, #submit {
+    text-align: center;
+    width: 100%;
+    padding: 5px;
+}
+
+ #desc{
+     height: 50px;
+   
+ }
+
+ #submit {
+    background-color: grey; 
+    color: white;
+    margin-top: 20px;
+ }
+
+ #add-form div {
+     margin: 5px;
+ }
+.error-content{
+    text-align: center;
+    padding: 10px;
+}
+ .error-message{
+     color: red;
+     display: block;
+ }
+
+ #cancel-error{
+     background: rgb(227, 227, 227);
+     color: red;
+     border: none;
+     text-align: center;
+     text-decoration: none;
+     font-size: 12px;
+ }
+
+ @media (min-width: 650px) {
+    main {
+        width: 70%;
+    }
+
+    .rating, .title{
+        display: inline-block;
+        width: 48%;
+    }
+    #desc{
+        height: 70px;
+
+ }
+
+ @media (min-width: 850px) {
+    main {
+        width: 60%;
+    }
+
+ }

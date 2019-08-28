@@ -3,14 +3,43 @@
 
 const api = (function (){
 
+
+  const listApiFetch = function(...args) {
+
+    let error;
+    return fetch(...args)
+      .then(res => {
+        if (!res.ok) {
+          error = { code: res.status };
+
+          if (!res.headers.get('content-type').includes('json')) {
+            error.message = res.statusText;
+            return Promise.reject(error);
+          }
+        }
+
+        return res.json();
+      })
+      .then(data => {
+
+        if (error) {
+          error.message = data.message;
+          return Promise.reject(error);
+        }
+
+        return data;
+      });
+  };
+
+
   const BASE_URL = 'https://thinkful-list-api.herokuapp.com/nancy';
 
   const getBookmarks = function (){
-    return fetch(`${BASE_URL}/bookmarks`);
+    return listApiFetch(`${BASE_URL}/bookmarks`);
   };
 
   const createBookmark = function (data){
-    return fetch(`${BASE_URL}/bookmarks`, {
+    return listApiFetch(`${BASE_URL}/bookmarks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -20,14 +49,12 @@ const api = (function (){
   };
 
   const deleteBookmark = function (id){
-    return fetch(`${BASE_URL}/bookmarks/${id}`, {
+    return listApiFetch(`${BASE_URL}/bookmarks/${id}`, {
       method: 'DELETE'
     });
   };
 
-  /*const updateBookmarkInfo = function (id, updateData) {
 
-  }*/
   return {
     getBookmarks,
     createBookmark,
