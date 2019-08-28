@@ -81,7 +81,9 @@ const bookmarksList = (function (){
     console.log('addBookmarkHandler fired');
     $('.add-button').on('click', function() {
       store.adding = true; 
-      render();
+      if(store.adding){
+        $('.add-form-container').html(generateAddElements);
+      }
 
     });
   }
@@ -109,6 +111,7 @@ const bookmarksList = (function (){
         .then(res => res.json()) //converting back to js 
         .then((data) => {
           store.addBookmark(data);
+          formElement.classList.add('hide');
           render();
         });
     });
