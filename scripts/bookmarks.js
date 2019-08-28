@@ -3,14 +3,6 @@
 
 const bookmarksList = (function (){
 
-
-  /* function generateError(message){
-    return `
-        <p class="error-content"> ${message} </p>
-        `;
-
-  }
-*/
   function generateAddElements (){
     return `
         <form id="add-form">
@@ -30,9 +22,11 @@ const bookmarksList = (function (){
                 <label for="url">URL</label>
                 <input type="text" name="url" id="url" placeholder="https://www.ncbi.nlm.nih.gov/" required>
             </div>
-            <div class="add-submit-button">
+            <div class="submit-cancel-button-container">
                 <input type="submit" name="submit" id="submit" value="Create Bookmark">
+                <button class="cancel-button">Cancel</button>
             </div>
+            
         </form>`;
   }
 
@@ -64,13 +58,6 @@ const bookmarksList = (function (){
     return bookmarks.join('');
   }
 
-/*
-  function renderError(){
-    if(store.error) {
-        
-    }
-  }
-*/
   function render() {
     let bookmarks = [...store.bookmarks];
 
@@ -79,6 +66,9 @@ const bookmarksList = (function (){
     }
 
     if(store.filterBy !== 'ALL'){
+
+
+/////////////////////// explain logic please       
       bookmarks = bookmarks.filter(bookmark => bookmark.rating >= store.filterBy);
     }
     console.log('render ran');
@@ -87,10 +77,6 @@ const bookmarksList = (function (){
 
   }
 
-
-  //when add button is clicked 
-  //add button is removed
-  //updates store to make adding: true
   function handlerAddBookmark(){
     console.log('addBookmarkHandler fired');
     $('.add-button').on('click', function() {
@@ -128,6 +114,16 @@ const bookmarksList = (function (){
     });
   }
 
+  /////// cancel button if time permits 
+ /*
+  function handlerCancelForm() {
+    $('.add-form-container').on('click', '.cancel-button', function(){
+      console.log('cancel button clicked');
+      $('.add-form-container').hide();
+      render();
+    })
+  }
+*/
   function getIdFromElement(bookmark){
     return $(bookmark)
       .closest('.bookmark-element')
@@ -176,6 +172,7 @@ const bookmarksList = (function (){
     handleNewBookmarkSubmit();
     handlerDelete();
     handlerFilterByRank();
+    //handlerCancelForm();
     //handlerExpand();
   }
  
@@ -183,7 +180,8 @@ const bookmarksList = (function (){
 
   return {
     render,
-    bindEventListeners
+    bindEventListeners,
+    
   };
 
 }());
