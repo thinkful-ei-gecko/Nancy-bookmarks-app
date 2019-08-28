@@ -4,13 +4,19 @@
 const bookmarksList = (function (){
 
 
+  /* function generateError(message){
+    return `
+        <p class="error-content"> ${message} </p>
+        `;
 
+  }
+*/
   function generateAddElements (){
     return `
         <form id="add-form">
             <div>
                 <label for="title">Title</label>
-                <input type="text" id="title" name="title" placeholder="Enter Title">
+                <input type="text" id="title" name="title" placeholder="Enter Title" required>
             </div>
             <div>
                 <label for="rating">Rating</label>
@@ -22,7 +28,7 @@ const bookmarksList = (function (){
             </div>
             <div>
                 <label for="url">URL</label>
-                <input type="text" name="url" id="url" placeholder="https://www.ncbi.nlm.nih.gov/">
+                <input type="text" name="url" id="url" placeholder="https://www.ncbi.nlm.nih.gov/" required>
             </div>
             <div class="add-submit-button">
                 <input type="submit" name="submit" id="submit" value="Create Bookmark">
@@ -58,7 +64,13 @@ const bookmarksList = (function (){
     return bookmarks.join('');
   }
 
-
+/*
+  function renderError(){
+    if(store.error) {
+        
+    }
+  }
+*/
   function render() {
     let bookmarks = [...store.bookmarks];
 
@@ -66,6 +78,9 @@ const bookmarksList = (function (){
       $('.add-form-container').html(generateAddElements);
     }
 
+    if(store.filterBy !== 'ALL'){
+      bookmarks = bookmarks.filter(bookmark => bookmark.rating >= store.filterBy);
+    }
     console.log('render ran');
     const bookmarkListString = generateBookmarkItemString(bookmarks);
     $('.bookmark-list').html(bookmarkListString);
@@ -134,6 +149,17 @@ const bookmarksList = (function (){
     });
   }
 
+  function handlerFilterByRank() {
+    $('.select-button').change(function() {
+      let selectVal = $('.select-button').val();
+      console.log(selectVal);
+      store.setFilterBy(selectVal);
+      console.log(store);
+      render();
+
+    });
+  
+  }
 
   /*
   function handlerExpand(){
@@ -149,6 +175,7 @@ const bookmarksList = (function (){
     handlerAddBookmark();
     handleNewBookmarkSubmit();
     handlerDelete();
+    handlerFilterByRank();
     //handlerExpand();
   }
  

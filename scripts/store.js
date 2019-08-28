@@ -15,22 +15,32 @@ let store = (function (){
   const findAndDelete = function(id) {
     this.bookmarks = this.bookmarks.filter(item => item.id !== id);
   };
+
+  const setFilterBy = function (rank) {
+    this.filterBy = rank;
+  }
   /*function findAndUpdate(id, newData) {
     let foundBookmark = store.bookmarks.find(bookmark => bookmark.id === id);
     Object.assign(foundBookmark, newData);
   }*/
 
+  /*
+  const error = function(errorMessage){
+      this.showError = //error message
+  }
+  */
 
   return {
 
     bookmarks: [],
     adding: false,
     showError: '',
-    filterBy: '',
+    filterBy: 'ALL',
 
     addBookmark,
     findById,
     findAndDelete,
+    setFilterBy
     // findAndUpdate
   };
  
